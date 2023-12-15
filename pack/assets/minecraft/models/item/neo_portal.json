@@ -1,7 +1,6 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"particle": "block/neo_portal",
+		"particle": "block/nether_portal",
 		"portal": "block/neo_portal"
 	},
 	"elements": [
