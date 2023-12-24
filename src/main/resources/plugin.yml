@@ -5,3 +5,13 @@ api-version: '1.20'
 authors: [yuko1101]
 description: An Advanced Portal plugin for Spigot or its forks.
 website: https://github.com/yuko1101/NeoPortals
+
+commands:
+  neoportals:
+    aliases:
+      - np
+      - neoportal
+    description: Main command of NeoPortals
+    usage: /<command> [subcommand] [args]
+    permission: neoportals.command.neoportals
+
