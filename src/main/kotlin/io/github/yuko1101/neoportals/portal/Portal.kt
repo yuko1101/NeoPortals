@@ -9,10 +9,12 @@ import org.bukkit.entity.ItemDisplay
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.persistence.PersistentDataType
+import kotlin.math.floor
 
 class Portal(val itemDisplay: ItemDisplay) {
     val location: Location = itemDisplay.location
     val blockFace = itemDisplay.facing
+    var initialized = false
 
     fun destroy(shouldBreak: Boolean) {
         val block = location.block
@@ -22,11 +24,18 @@ class Portal(val itemDisplay: ItemDisplay) {
     }
 
     companion object {
-        fun create(location: Location, destination: Location, color: Color): Portal {
+        fun create(location: Location, destination: Location, color: Color, adjustLoc: Boolean = true): Portal {
+            if (adjustLoc) {
+                location.adjustLoc()
+                destination.adjustLoc()
+            }
+
             if (location.world == null) throw IllegalArgumentException("Location must have world")
             val itemDisplay = location.world!!.spawn(location, ItemDisplay::class.java)
             itemDisplay.itemStack = getPortalItemStack(color)
             itemDisplay.setDestination(destination)
+
+            location.world!!.getBlockAt(location).type = Material.NETHER_PORTAL
 
             val portal = Portal(itemDisplay)
             PortalManager.addPortal(portal)
@@ -61,6 +70,13 @@ class Portal(val itemDisplay: ItemDisplay) {
             val z = container.get(NamespacedKey(NeoPortals.instance, "z"), PersistentDataType.DOUBLE)
             if (worldName == null || x == null || y == null || z == null) return null
             return Location(NeoPortals.instance.server.getWorld(worldName), x, y, z)
+        }
+
+        fun Location.adjustLoc(): Location {
+            x = floor(x) + 0.5
+            y = floor(y) + 0.5
+            z = floor(z) + 0.5
+            return this
         }
     }
 

@@ -20,6 +20,8 @@ class NeoPortals : JavaPlugin() {
         PortalManager.loadAll()
 
         getCommand("neoportals")?.setExecutor(NeoPortalCommand)
+
+        EventListener.runTaskTimer(this, 0, 1)
     }
 
     override fun onDisable() {

@@ -28,6 +28,24 @@ object PortalManager {
         return portals[location]
     }
 
+    fun getPortals(): List<Portal> {
+        return portals.values.toList()
+    }
+
+    // TODO: consider entity hitbox instead of distanceLimit
+    fun getNearestPortal(location: Location, distanceLimit: Double = Double.MAX_VALUE): Portal? {
+        var nearestPortal: Portal? = null
+        var nearestDistance = distanceLimit
+        for (portal in portals.values) {
+            val distance = portal.location.distance(location)
+            if (distance < nearestDistance) {
+                nearestPortal = portal
+                nearestDistance = distance
+            }
+        }
+        return nearestPortal
+    }
+
     fun addPortal(portal: Portal) {
         portals[portal.location] = portal
     }
