@@ -45,6 +45,7 @@ class Portal(val itemDisplay: ItemDisplay) {
         fun getPortalItemStack(color: Color): ItemStack {
             val itemStack = ItemStack(Material.LEATHER_HORSE_ARMOR)
             val meta = itemStack.itemMeta!! as LeatherArmorMeta
+            meta.setDisplayName("NeoPortals")
             meta.setColor(color)
             meta.setCustomModelData(3213)
             itemStack.itemMeta = meta

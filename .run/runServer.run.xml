@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="runServer" type="JarApplication">
-    <option name="JAR_PATH" value="$PROJECT_DIR$/run/spigot-1.20.2.jar" />
+    <option name="JAR_PATH" value="$PROJECT_DIR$/run/spigot-1.20.1.jar" />
     <option name="VM_PARAMETERS" value="-Xms4G -Xmx4G" />
     <option name="PROGRAM_PARAMETERS" value="?nojline nogui" />
     <option name="WORKING_DIRECTORY" value="C:\Users\seo won seok2\IdeaProjects\NeoPortals\run" />
