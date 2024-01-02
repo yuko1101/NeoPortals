@@ -1,6 +1,6 @@
 {
     "textures": {
-        "particle": "block/transparent",
+        "particle": "block/nether_portal",
         "portal": "block/transparent"
     },
     "elements": [
