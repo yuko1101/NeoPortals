@@ -36,6 +36,8 @@ object PortalManager {
     fun getNearestPortal(location: Location, distanceLimit: Double = Double.MAX_VALUE): Portal? {
         var nearestPortal: Portal? = null
         var nearestDistance = distanceLimit
+
+        val portals = this.portals.filter { it.value.location.world == location.world }
         for (portal in portals.values) {
             val distance = portal.location.distance(location)
             if (distance < nearestDistance) {
