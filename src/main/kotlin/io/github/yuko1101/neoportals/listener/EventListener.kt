@@ -1,7 +1,7 @@
 package io.github.yuko1101.neoportals.listener
 
-import io.github.yuko1101.neoportals.portal.Portal.Companion.getDestination
 import io.github.yuko1101.neoportals.portal.PortalManager
+import io.github.yuko1101.neoportals.utils.LocationUtils.teleportWith
 import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.event.EventHandler
@@ -36,7 +36,7 @@ object EventListener : BukkitRunnable(), Listener {
         val portal = PortalManager.getNearestPortal(event.from, 2.0)
         if (portal != null) {
             event.isCancelled = true
-            portal.itemDisplay.getDestination()?.let { event.player.teleport(it) }
+            event.player.teleportWith(portal)
         }
     }
 
@@ -51,7 +51,8 @@ object EventListener : BukkitRunnable(), Listener {
         val portal = PortalManager.getNearestPortal(event.from, 2.0)
         if (portal != null) {
             event.isCancelled = true
-            portal.itemDisplay.getDestination()?.let { event.entity.teleport(it) }
+            event.entity.teleportWith(portal)
         }
     }
 }
+
