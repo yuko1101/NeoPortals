@@ -3,8 +3,11 @@ package io.github.yuko1101.neoportals.listener
 import io.github.yuko1101.neoportals.portal.Portal.Companion.getDestination
 import io.github.yuko1101.neoportals.portal.PortalManager
 import org.bukkit.Material
+import org.bukkit.World
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityPortalEvent
+import org.bukkit.event.player.PlayerPortalEvent
 import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.scheduler.BukkitRunnable
 
@@ -28,12 +31,27 @@ object EventListener : BukkitRunnable(), Listener {
     }
 
     @EventHandler
-    fun onTeleport(event: PlayerTeleportEvent) {
+    fun onTeleport(event: PlayerPortalEvent) {
         if (event.cause != PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) return
         val portal = PortalManager.getNearestPortal(event.from, 2.0)
         if (portal != null) {
             event.isCancelled = true
             portal.itemDisplay.getDestination()?.let { event.player.teleport(it) }
+        }
+    }
+
+    @EventHandler
+    fun onEntityTeleport(event: EntityPortalEvent) {
+        if (event.from.world == null || event.to?.world == null) return
+        val isFromNether = event.from.world!!.environment == World.Environment.NETHER
+        val isToNether = event.to!!.world!!.environment == World.Environment.NETHER
+        val isThroughNetherGate = (!isFromNether && isToNether) || (isFromNether && !isToNether)
+        if (!isThroughNetherGate) return
+
+        val portal = PortalManager.getNearestPortal(event.from, 2.0)
+        if (portal != null) {
+            event.isCancelled = true
+            portal.itemDisplay.getDestination()?.let { event.entity.teleport(it) }
         }
     }
 }
